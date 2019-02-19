@@ -3,6 +3,7 @@ package com.jojoldu.webservcies.domain.posts;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.jojoldu.webservcies.domain.BaseTimeEntity;
@@ -102,9 +103,10 @@ public class Posts extends BaseTimeEntity{
 
     /**
      * PK 필드
+     * ! https://jojoldu.tistory.com/295
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**

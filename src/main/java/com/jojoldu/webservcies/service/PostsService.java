@@ -1,7 +1,11 @@
 package com.jojoldu.webservcies.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 //import com.jojoldu.webservcies.domain.posts.Posts;
 import com.jojoldu.webservcies.domain.posts.PostsRepository;
+import com.jojoldu.webservcies.dto.posts.PostsMainResponseDto;
 import com.jojoldu.webservcies.dto.posts.PostsSaveRequestDto;
 
 import org.springframework.stereotype.Service;
@@ -38,6 +42,22 @@ public class PostsService {
          * http://springmvc.egloos.com/495798
          */
         return postRepository.save(dto.toEntity()).getId();
+    }
+
+    /**
+     * findAllDesc 메소드의 트랜잭션 어노테이션(@Transactional)에 옵션이 하나 추가되었습니다. 
+     * 옵션(readOnly = true)을 주면 트랜잭션 범위는 유지하되, 조회 기능만 남겨두어 조회 속도가 개선되기 때문에
+     * 특별히 등록/수정/삭제 기능이 없는 메소드에선 사용하시는걸 추천드립니다. 
+     */
+
+    @Transactional(readOnly = true)
+    public List<PostsMainResponseDto> fildAllDesc() {
+        /**
+         * .map(PostsMainResponseDto::new)는 실제로는 .map(posts -> new PostsMainResponseDto(posts))와 같습니다. 
+         * repository 결과로 넘어온 Posts의 Stream을 map을 통해 PostsMainResponseDto로 변환 -> List로 반환하는 메소드입니다.
+         */
+        return postRepository.findAllDesc().map(PostsMainResponseDto::new).collect(Collectors.toList());
+        
     }
 
 }

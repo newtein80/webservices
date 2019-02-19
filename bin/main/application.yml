@@ -1,4 +1,17 @@
 spring:
+  profiles:
+    active: local # 기본 환경 선택
+
+# local 환경
+---
+spring:
+  profiles: local
+  datasource:
+    data: classpath:data-h2.sql # 시작할때 실행시킬 script (data-h2.sql 파일을 프로젝트 실행시에 자동으로 수행되도록 설정을 추가)
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
   h2:
     console:
       enabled: true
@@ -7,3 +20,22 @@ spring:
 # application.properties를 사용하셔도 무방합니다만, 굳이 yml로 변경한 이유는 properties에 비해 상대적으로 유연한 구조를 가졌기 때문입니다. 
 # yml은 상위 계층에 대한 표현, List 등을 완전하게 표현할수가 있습니다. 
 # 최근의 많은 도구들이 yml 설정을 지원하기 때문에 이참에 시작해보시는 것을 추천드립니다.
+
+# 현재 저희가 사용중인 로컬 DB는 H2입니다. 
+# H2 DB는 메모리 DB인지라 프로젝트를 실행할때마다 스키마가 새로 생성되어 테이블 구조 변경시 일일이 alter table과 같이 수정할 필요가 없습니다. 
+# 또한, 항상 테이블을 초기화하기 때문에 깨끗한 상태로 로컬 개발을 진행할수있다는 장점도 있습니다. 
+# 하지만 이로 인해, 프로젝트 코드를 수정하고 다시 실행시키면 이전에 저장해놓은 데이터가 초기화되버립니다.
+
+# spring.profile 옵션이 추가되었는데요. 
+# 이 옵션은 특별히 어플리케이션 실행시 파라미터로 넘어온게 없으면 active 값을 보게됩니다. 
+# 운영 환경에선 real 혹은 production 등과 같은 profile을 보도록 jar 실행시점에 파라미터를 변경합니다. 
+# (이 부분은 앞으로 배포 환경 구축시에 자세히 설명할 예정이니, 대충 그렇구나 정도로만 보시면 됩니다.) 
+# local profile에선 data-h2.sql을 초기 데이터 실행 스크립트로 지정하였습니다. 
+# 그외 환경에선 해당 스크립트가 실행되지 않기 위해 local에 직접 등록한 것입니다.
+
+# Tip) 
+# application.yml 에서 --- 를 기준으로 상단은 공통 영역이며, 하단이 각 profile의 설정 영역입니다. 
+# 공통영역의 값은 각 profile환경에 동일한 설정이 있으면 무시되고, 없으면 공통영역의 설정값이 사용됩니다. 
+# 그렇다보니 공통영역에 설정값을 넣는것에 굉장히 주의가 필요합니다. 
+# 만약 공통영역에 jpa.hibernate.ddl-auto:create-drop가 있고 운영 profile에 해당 설정값이 없다면 운영환경에서 배포시 모든 테이블이 drop -> create 됩니다. 
+# 이때문에 datasource, table 등과 같은 옵션들은 공통영역엔 두지 않고 각 profile마다 별도로 두는것을 추천합니다.
