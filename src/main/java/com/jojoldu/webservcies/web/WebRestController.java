@@ -56,7 +56,8 @@ public class WebRestController {
     @GetMapping("/hello")
     public String hello() {
         //문자열을 JSON 형태로 반환
-        return "HelloWorld";
+        String test = "HelloWorld !";
+        return test;
     }
 
     // @PostMapping("/posts")

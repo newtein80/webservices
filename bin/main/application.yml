@@ -1,7 +1,7 @@
 spring:
- h2:
-  console:
-   enabled: true
+  h2:
+    console:
+      enabled: true
 
 # Local 환경에선 DB로 H2 를 사용하기 때문에 SpringBoot에서 H2를 활성화시키도록 옵션을 추가
 # application.properties를 사용하셔도 무방합니다만, 굳이 yml로 변경한 이유는 properties에 비해 상대적으로 유연한 구조를 가졌기 때문입니다. 
