@@ -1,7 +1,8 @@
 package com.jojoldu.webservcies.web;
 
-import com.jojoldu.webservcies.domain.posts.PostsRepository;
+//import com.jojoldu.webservcies.domain.posts.PostsRepository;
 import com.jojoldu.webservcies.dto.posts.PostsSaveRequestDto;
+import com.jojoldu.webservcies.service.PostsService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,7 +52,9 @@ public class WebRestController {
     스프링빈의 생명주기를 관리하고 (생성 등) 의존성들(예: A 컨트롤러가 a 서비스가 필요한 상황)을 대신 넣어주는 역할
      */
     
-    private PostsRepository postsRepository;
+    //private PostsRepository postsRepository;
+    //save 메소드를 service의 save로 교체
+    private PostsService postsService;
 
     @GetMapping("/hello")
     public String hello() {
@@ -65,8 +68,10 @@ public class WebRestController {
     //     postsRepository.save(dto.toEntity());
     // }
 
+    //save 메소드를 service의 save로 교체
+
     @PostMapping("/posts")
-    public void savePosts(@RequestBody PostsSaveRequestDto dto) {
-        postsRepository.save(dto.toEntity());
+    public Long savePosts(@RequestBody PostsSaveRequestDto dto) {
+        return postsService.save(dto);
     }
 }
