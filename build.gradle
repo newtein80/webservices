@@ -9,6 +9,10 @@ group = 'com.jojoldu'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+//Spring Boot Overriding
+//SpringDataJpa가 사용하는 Hibernate의 버전만 5.2.11로 변경해서 사용하겠다는 의존성 변경 코드
+ext['hibernate.version'] = '5.2.11.Final'
+
 repositories {
 	mavenCentral()
 }
@@ -20,4 +24,5 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//classpath 'io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE'
 }
