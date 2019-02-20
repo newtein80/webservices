@@ -54,7 +54,6 @@ var main = {
             alert(error);
         });
     }
-
 };
 
 main.init();
